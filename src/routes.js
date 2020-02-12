@@ -1,7 +1,21 @@
 import { Router } from 'express';
 
+import UserController from './app/controllers/UserController';
+import SessionController from './app/controllers/SessionController';
+import RecipientController from './app/controllers/RecipientController';
+
+import authMiddleware from './app/middlewares/auth';
+
 const routes = new Router();
 
-routes.get('/', (req, res) => res.json({ message: 'Olá :)' }));
+// Administration users
+routes.post('/users', UserController.store);
+routes.put('/users', authMiddleware, UserController.update);
+
+// Login session
+routes.post('/sessions', SessionController.store);
+
+// Recipient
+routes.post('/recipients', RecipientController.store);
 
 export default routes;
